@@ -2,18 +2,17 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import { Server } from "http";
 import SocketServer from "./socket";
 import cors from "cors";
-import DB from "../data-source";
+import { db } from "../data-source";
+import RootRouter from "../Routers/root.router";
 
 export default class App {
   public app: Application = express();
-  public db: DB;
   private server: Server;
   private port: number;
 
   constructor(port: number) {
     this.port = port;
     this.server = new SocketServer(this.app).server;
-    this.db = new DB();
     this.initMiddlewares();
     this.initRouters();
     this.notFoundRouter();
@@ -21,7 +20,7 @@ export default class App {
   }
 
   public async startServer() {
-    await this.db.initializeDatabase();
+    await db.initializeDatabase();
     this.app.listen(this.port, () => {
       console.log(
         `TypeORM test server has been started successfully on port ${this.port}`
@@ -41,6 +40,7 @@ export default class App {
     this.app.get("/", (_, res: Response) => {
       res.send("Welcome!");
     });
+    this.app.use("/api/v1", new RootRouter().router);
     console.log("Routers has been initiated successfully");
   }
 

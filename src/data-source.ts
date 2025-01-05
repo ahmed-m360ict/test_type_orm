@@ -12,7 +12,7 @@ export default class DB {
       username: "postgres",
       password: "asdfgh",
       database: "test_typeorm",
-      synchronize: true,
+      synchronize: ["prod", "production"].includes(process.env.NODE_ENV || ""),
       logging: false,
       entities: [Photo],
       migrations: [],
@@ -29,4 +29,10 @@ export default class DB {
       console.warn("Database connection failed.", error.message);
     }
   }
+
+  getDataSource() {
+    return this.AppDataSource;
+  }
 }
+
+export const db = new DB();
