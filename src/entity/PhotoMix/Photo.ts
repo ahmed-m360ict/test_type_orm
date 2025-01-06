@@ -17,9 +17,15 @@ export class Photo {
   @Column("integer")
   views!: number;
 
-  @Column("numeric", { precision: 1, scale: 2 })
+  @Column("numeric", { precision: 1, scale: 2, nullable: true })
   rating!: number;
 
   @Column({ default: false })
   isPublished!: boolean;
+
+  @Column({ default: new Date(), update: false })
+  created_at!: Date;
+
+  @Column({ nullable: true })
+  updated_at!: Date;
 }
