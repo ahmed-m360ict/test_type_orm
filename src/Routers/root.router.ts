@@ -19,5 +19,11 @@ export default class RootRouter {
       .patch(this.controller.updatePhoto)
       .delete(this.controller.deletePhoto)
       .get(this.controller.getPhoto);
+
+    this.router.route("/albums").post(this.controller.insertAlbum);
+
+    this.router
+      .route("/add-photo-to-album")
+      .post(this.controller.addPhotoToAlbum);
   }
 }

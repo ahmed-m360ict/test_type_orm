@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Photo } from "./entity/PhotoMix/Photo";
+import * as Entities from "./entity";
 
 export default class DB {
   protected AppDataSource: DataSource;
@@ -14,7 +14,12 @@ export default class DB {
       database: "test_typeorm",
       synchronize: !["prod", "production"].includes(process.env.NODE_ENV || ""),
       logging: false,
-      entities: [Photo],
+      entities: [
+        Entities.Photo,
+        Entities.PhotoMetadata,
+        Entities.Author,
+        Entities.Album,
+      ],
       migrations: [],
       subscribers: [],
     });

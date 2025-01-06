@@ -9,7 +9,14 @@ export default class PhotoMixController {
     this.deletePhoto = this.deletePhoto.bind(this);
     this.getPhotos = this.getPhotos.bind(this);
     this.getPhoto = this.getPhoto.bind(this);
+
+    this.insertAlbum = this.insertAlbum.bind(this);
+    this.addPhotoToAlbum = this.addPhotoToAlbum.bind(this);
   }
+
+  ////////////
+  // Photo //
+  //////////
 
   public async insertPhoto(req: Request, res: Response) {
     const { code, ...rest } = await this.services.insertPhoto(req);
@@ -33,6 +40,24 @@ export default class PhotoMixController {
 
   public async getPhoto(req: Request, res: Response) {
     const { code, ...rest } = await this.services.getPhoto(req);
+    res.status(code).json(rest);
+  }
+
+  ////////////
+  // Album //
+  //////////
+
+  public async insertAlbum(req: Request, res: Response) {
+    const { code, ...rest } = await this.services.insertAlbum(req);
+    res.status(code).json(rest);
+  }
+
+  ////////////////////
+  // Photo & Album //
+  //////////////////
+
+  public async addPhotoToAlbum(req: Request, res: Response) {
+    const { code, ...rest } = await this.services.addPhotoToAlbum(req);
     res.status(code).json(rest);
   }
 }
